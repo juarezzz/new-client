@@ -5,12 +5,12 @@ import Head from 'next/head'
 function MyApp({ Component, pageProps }) {
   return (
     <>
-    <Head>
-      <title>OpenBooks</title>
-    </Head>
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+      <Head>
+        <title>OpenBooks</title>
+      </Head>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   )
 }

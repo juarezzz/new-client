@@ -9,8 +9,8 @@ function Navbar() {
     const [isMenuOpen, toggleIsMenuOpen] = useToggle(false)
 
     return (
-        <AppBar position="sticky" sx={{ marginBottom: '20px' }}>
-            <Toolbar>
+        <AppBar position="sticky">
+            <Toolbar sx={{height: 60}}>
                 <Stack
                     width='100%'
                     direction='row'

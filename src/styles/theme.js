@@ -7,7 +7,7 @@ const customTheme = createTheme({
             light: '#e1f2fe'
         },
         secondary: {
-            main: '#D05353'
+            main: '#59729c'
         },
         dark: {
             main: '#000',

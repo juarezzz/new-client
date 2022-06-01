@@ -16,9 +16,8 @@ const InfoTable = ({ book }) => {
                             colSpan={2}
                             sx={{
                                 textAlign: 'center',
-                                color: 'white',
-                                fontWeight: 500,
-                                fontSize: '18px'
+                                fontWeight: 600,
+                                fontSize: '20px'
                             }}>
                             General Info
                         </StyledTableCell>

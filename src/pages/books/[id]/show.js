@@ -1,11 +1,11 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Grid, Rating, Typography } from "@mui/material";
 import InfoTable from "../../../components/InfoTable"
 import axios from 'axios';
 
 function ShowPage({ book }) {
     return (
-        <Container maxWidth="lg">
-            <Stack direction='row' justifyContent='space-between'>
+        <Grid container justifyContent='center' rowSpacing={2} columnGap={8}>
+            <Grid item xs={3} display='flex' justifyContent='center'>
                 <Box
                     width={240}
                     height={320}
@@ -19,27 +19,36 @@ function ShowPage({ book }) {
                         height='100%'
                     />
                 </Box>
-                <Box width='70%'>
-                    <Typography component='h2' color='dark.light' fontWeight={700}
-                        sx={{
-                            fontSize: 36,
-                        }}
-                    >
-                        {book.title}
-                    </Typography>
+            </Grid>
+            <Grid item xs={7}>
+                <Typography component='h2' color='dark.light' fontWeight={700}
+                    sx={{
+                        fontSize: 36,
+                    }}
+                >
+                    {book.title}
+                </Typography>
 
-                    <Typography component='h3' color='dark.light' fontWeight={300} fontSize={24}>
-                        {book.author}
-                    </Typography>
+                <Typography component='h3' color='dark.light' fontWeight={300} fontSize={24}>
+                    {book.author}
+                </Typography>
 
-                    <Typography component='p' textAlign='justify' marginTop='20px'>
-                        {book.description}
-                    </Typography>
-
-                    <InfoTable book={book} />
-                </Box>
-            </Stack>
-        </Container >
+                <Typography component='pre' whiteSpace='pre-line' textAlign='justify' marginTop='20px' height='200px'
+                    sx={{
+                        overflowY: 'auto',
+                    }}
+                >
+                    {book.description}
+                </Typography>
+            </Grid>
+            <Grid item xs={3} display='flex' flexDirection='column' alignItems='center'>
+                <Rating value={4.55} readOnly sx={{ fontSize: 40, margin: '0 auto' }} precision={0.1} />
+                <Typography component='span' color='dark.light' textAlign='center' fontWeight={600} fontSize={27}>4.55</Typography>
+            </Grid>
+            <Grid item xs={7}>
+                <InfoTable book={book} />
+            </Grid>
+        </Grid>
     )
 }
 
