@@ -1,8 +1,8 @@
 import { AppBar, Toolbar, Typography, InputBase, Button, Stack, Avatar, Box, Collapse, List, ListItem } from '@mui/material'
 import { Search as SearchIcon, MenuBook, Group, TravelExplore, Menu as MenuIcon } from '@mui/icons-material'
-import { SearchBar, CustomButton, CustomButtonGroup } from '../styles/Navbar.style.js'
+import { SearchBarForm, CustomButton, CustomButtonGroup } from '../styles/Navbar.style.js'
 import useToggle from '../hooks/useToggle'
-
+import Link from 'next/link'
 
 function Navbar() {
     const [loggedIn, toggleLoggedIn] = useToggle(false)
@@ -10,7 +10,7 @@ function Navbar() {
 
     return (
         <AppBar position="sticky">
-            <Toolbar sx={{height: 60}}>
+            <Toolbar sx={{ height: 60 }}>
                 <Stack
                     width='100%'
                     direction='row'
@@ -43,8 +43,9 @@ function Navbar() {
                                 sm: '0'
                             }
                         }}>
-
-                        OpenBooks
+                        <Link href="/">
+                            OpenBooks
+                        </Link>
                     </Typography>
 
                     <CustomButtonGroup>
@@ -53,7 +54,8 @@ function Navbar() {
                         <CustomButton startIcon={<TravelExplore />}>Explorar</CustomButton>
                     </CustomButtonGroup>
 
-                    <SearchBar
+                    <SearchBarForm
+                        action='/books/search'
                         sx={{
                             display: {
                                 xs: 'none',
@@ -62,13 +64,14 @@ function Navbar() {
                         }}
                     >
                         <InputBase
+                            name='q'
                             placeholder="Procurar"
                             sx={{ flex: 1 }}
                         />
-                        <Button disableRipple sx={{ mr: -1.5 }}>
+                        <Button disableRipple sx={{ mr: -1.5 }} type="submit">
                             <SearchIcon />
                         </Button>
-                    </SearchBar>
+                    </SearchBarForm>
 
                     <CustomButton
                         onClick={toggleIsMenuOpen}
@@ -111,7 +114,6 @@ function Navbar() {
                                 :
                                 <Button
                                     disableRipple
-                                    onClick={() => toggleLoggedIn(true)}
                                     variant="outlined"
                                     color="light"
                                     sx={{
@@ -122,7 +124,9 @@ function Navbar() {
                                         borderWidth: '2px'
                                     }}
                                 >
-                                    Login
+                                    <Link href='/user/login'>
+                                        Login
+                                    </Link>
                                 </Button>
                         }
                     </Box>
@@ -140,7 +144,8 @@ function Navbar() {
                 >
                     <>
 
-                        <SearchBar
+                        <SearchBarForm
+                            action='/books/search'
                             sx={{
                                 width: '90%',
                                 margin: '15px auto 0px',
@@ -153,14 +158,15 @@ function Navbar() {
 
                         >
                             <InputBase
+                                name='q'
                                 autoFocus
                                 placeholder="Procurar"
                                 sx={{ flex: 1 }}
                             />
-                            <Button disableRipple sx={{ mr: -1.5 }}>
+                            <Button disableRipple sx={{ mr: -1.5 }} type="submit">
                                 <SearchIcon />
                             </Button>
-                        </SearchBar>
+                        </SearchBarForm>
 
 
                         <List>

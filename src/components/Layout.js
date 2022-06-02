@@ -16,8 +16,9 @@ function Layout({ children }) {
                     top: 60, //Valor da altura da navbar
                     bottom: 0,
                     paddingTop: 20,
-                    overflowY: 'scroll',
-                    overflowX: 'hidden'
+                    overflowY: 'auto',
+                    overflowX: 'hidden',
+                    width: '100%'
                 }}
             >
                 {children}

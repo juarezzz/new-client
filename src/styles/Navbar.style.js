@@ -1,6 +1,6 @@
 import { Button, Box, styled } from "@mui/material"
 
-export const SearchBar = styled(Box)(({ theme }) => ({
+export const SearchBarForm = styled('form')(({ theme }) => ({
     width: '30%',
     height: '30px',
     backgroundColor: theme.palette.primary.light,
