@@ -1,8 +1,8 @@
-function Home() {
+function Index() {
   return (
     <div>
     </div>
   )
 }
 
-export default Home
+export default Index

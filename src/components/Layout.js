@@ -2,10 +2,11 @@ import { ThemeProvider } from '@emotion/react'
 import customTheme from '../styles/theme'
 import Navbar from './Navbar'
 import { useRouter } from 'next/router'
+import Loading from './Loading'
 
 function Layout({ children }) {
-    const { pathname } = useRouter()
-    const hasNavbar = !['/user/signUp', '/user/login'].includes(pathname)
+    const router = useRouter()
+    const hasNavbar = !['/user/signUp', '/user/login'].includes(router.pathname)
 
     return (
         <ThemeProvider theme={customTheme}>
@@ -23,6 +24,7 @@ function Layout({ children }) {
             >
                 {children}
             </main>
+            <Loading />
         </ThemeProvider>
     )
 }

@@ -3,9 +3,25 @@ import { Typography, Box, TextField, Stack, Button, InputAdornment, IconButton, 
 import CustomBackground from '../../styles/Background.style'
 import useToggle from '../../hooks/useToggle'
 import Link from 'next/link'
+import axios from 'axios'
+import Router from 'next/router'
 
 function login() {
     const [isVisible, toggleVisibility] = useToggle(false)
+
+    const handleSubmit = async (evt) => {
+        evt.preventDefault()
+        const { password, email } = evt.target
+        const response = await axios.post('/api/login', {
+            password: password.value,
+            email: email.value
+        }
+        )
+        if (response.status === 200) {
+            Router.push('/')
+        }
+    }
+
     return (
         <CustomBackground>
             <Typography component='h1' variant='h3' color='light.main' >
@@ -23,7 +39,9 @@ function login() {
                 <Typography variant='h4' color='dark.light' textAlign='center' >
                     Login
                 </Typography>
-                <form>
+                <form
+                    onSubmit={handleSubmit}
+                >
                     <Stack paddingTop='25px' gap='25px'>
                         <TextField
                             required

@@ -3,24 +3,23 @@ import { Typography, Box, TextField, Stack, Button, Link as MuiLink, InputAdornm
 import Link from 'next/link'
 import CustomBackground from '../../styles/Background.style'
 import useToggle from '../../hooks/useToggle'
-import axios from 'axios'
-import { useRouter } from 'next/router'
+import API from '../../services/api'
+import Router from 'next/router'
 
 function signUp() {
-    const router = useRouter()
     const [isVisible, toggleVisibility] = useToggle(false)
 
     const handleSubmit = async (evt) => {
         evt.preventDefault()
         const { username, password, email } = evt.target
-        const response = await axios.post('http://localhost:5000/users', {
+        const response = await API.post('/users', {
             username: username.value,
             password: password.value,
             email: email.value
         }
         )
         if (response.status === 201) {
-            router.push('/')
+            Router.push('/')
         }
     }
 

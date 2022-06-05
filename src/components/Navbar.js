@@ -3,10 +3,22 @@ import { Search as SearchIcon, MenuBook, Group, TravelExplore, Menu as MenuIcon 
 import { SearchBarForm, CustomButton, CustomButtonGroup } from '../styles/Navbar.style.js'
 import useToggle from '../hooks/useToggle'
 import Link from 'next/link'
+import Router from 'next/router'
+import useUser from '../hooks/useSession.js'
+
 
 function Navbar() {
-    const [loggedIn, toggleLoggedIn] = useToggle(false)
     const [isMenuOpen, toggleIsMenuOpen] = useToggle(false)
+    const user = useUser()
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault()
+        const searchString = evt.target.q.value.trim()
+        if (searchString) {
+            Router.push(`/books/search?q=${searchString}`)
+            evt.target.q.value = ''
+        }
+    }
 
     return (
         <AppBar position="sticky">
@@ -55,7 +67,7 @@ function Navbar() {
                     </CustomButtonGroup>
 
                     <SearchBarForm
-                        action='/books/search'
+                        onSubmit={handleSubmit}
                         sx={{
                             display: {
                                 xs: 'none',
@@ -97,7 +109,7 @@ function Navbar() {
                         }}
                     >
                         {
-                            loggedIn
+                            true
                                 ?
                                 <Button>
                                     <Avatar
@@ -112,22 +124,22 @@ function Navbar() {
                                         src="https://images.pexels.com/photos/11735050/pexels-photo-11735050.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
                                 </Button>
                                 :
-                                <Button
-                                    disableRipple
-                                    variant="outlined"
-                                    color="light"
-                                    sx={{
-                                        marginLeft: 1.5,
-                                        fontWeight: 'bold',
-                                        width: '70px',
-                                        height: '35px',
-                                        borderWidth: '2px'
-                                    }}
-                                >
-                                    <Link href='/user/login'>
+                                <Link href='/user/login'>
+                                    <Button
+                                        disableRipple
+                                        variant="outlined"
+                                        color="light"
+                                        sx={{
+                                            marginLeft: 1.5,
+                                            fontWeight: 'bold',
+                                            width: '70px',
+                                            height: '35px',
+                                            borderWidth: '2px'
+                                        }}
+                                    >
                                         Login
-                                    </Link>
-                                </Button>
+                                    </Button>
+                                </Link>
                         }
                     </Box>
                 </Stack>
@@ -145,7 +157,7 @@ function Navbar() {
                     <>
 
                         <SearchBarForm
-                            action='/books/search'
+                            onSubmit={handleSubmit}
                             sx={{
                                 width: '90%',
                                 margin: '15px auto 0px',
