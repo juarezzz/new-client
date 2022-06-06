@@ -1,4 +1,4 @@
-import { CircularProgress, Box, Fade } from "@mui/material"
+import { CircularProgress, Box } from "@mui/material"
 import { useState, useEffect } from "react"
 import { useRouter } from 'next/router'
 

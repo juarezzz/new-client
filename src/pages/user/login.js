@@ -8,13 +8,15 @@ import Router from 'next/router'
 
 function login() {
     const [isVisible, toggleVisibility] = useToggle(false)
+    const [rememberMe, toggleRememberMe] = useToggle(false)
 
     const handleSubmit = async (evt) => {
         evt.preventDefault()
         const { password, email } = evt.target
         const response = await axios.post('/api/login', {
             password: password.value,
-            email: email.value
+            email: email.value,
+            rememberMe: rememberMe
         }
         )
         if (response.status === 200) {
@@ -71,7 +73,7 @@ function login() {
                                 )
                             }}
                         />
-                        <FormControlLabel control={<Checkbox />} label="Remember Me" />
+                        <FormControlLabel control={<Checkbox onChange={toggleRememberMe} />} label="Remember Me" />
                         <Button variant='contained' type='submit'>
                             Login
                         </Button>

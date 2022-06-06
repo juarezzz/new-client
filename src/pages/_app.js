@@ -8,9 +8,9 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>OpenBooks</title>
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
     </>
   )
 }

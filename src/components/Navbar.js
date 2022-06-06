@@ -4,12 +4,12 @@ import { SearchBarForm, CustomButton, CustomButtonGroup } from '../styles/Navbar
 import useToggle from '../hooks/useToggle'
 import Link from 'next/link'
 import Router from 'next/router'
-import useUser from '../hooks/useSession.js'
-
+import useUser from '../hooks/useUser.js'
+import UserMenu from './UserMenu.js'
 
 function Navbar() {
     const [isMenuOpen, toggleIsMenuOpen] = useToggle(false)
-    const user = useUser()
+    const { user } = useUser()
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
@@ -100,50 +100,10 @@ function Navbar() {
                         <SearchIcon fontSize='large' />
                     </CustomButton>
 
-                    <Box
-                        sx={{
-                            display: {
-                                xs: 'none',
-                                sm: 'block'
-                            }
-                        }}
-                    >
-                        {
-                            true
-                                ?
-                                <Button>
-                                    <Avatar
-                                        sx={{
-                                            width: '36px',
-                                            height: '36px',
-                                            border: '1.5px solid',
-                                            borderColor: 'dark.light',
-                                            boxSizing: 'content-box'
-                                        }}
-                                        alt="User Profile Photo"
-                                        src="https://images.pexels.com/photos/11735050/pexels-photo-11735050.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
-                                </Button>
-                                :
-                                <Link href='/user/login'>
-                                    <Button
-                                        disableRipple
-                                        variant="outlined"
-                                        color="light"
-                                        sx={{
-                                            marginLeft: 1.5,
-                                            fontWeight: 'bold',
-                                            width: '70px',
-                                            height: '35px',
-                                            borderWidth: '2px'
-                                        }}
-                                    >
-                                        Login
-                                    </Button>
-                                </Link>
-                        }
-                    </Box>
+                    {user && <UserMenu user={user} /> /* Só carregar o menu do usuário depois que as informações forem carregadas */ }
                 </Stack>
             </Toolbar>
+
             <Collapse in={isMenuOpen}>
                 <Box
                     width='auto'
