@@ -1,20 +1,20 @@
-import { List, Typography } from '@mui/material'
+import { Box, List, Typography } from '@mui/material'
 import BookListItem from '../../components/BookListItem'
 import API from '../../services/api'
 
 
 function Search({ books, search }) {
     return (
-        <div>
-            <Typography component='h2' variant='h4' fontWeight={500} color='dark.light'>
+        <Box>
+            <Typography component='p' fontSize={32} fontWeight={500} color='dark.light' textAlign='center'>
                 {books.length > 0 ? `Showing results for ${search}:` : `Couldn't find results for ${search}`}
             </Typography>
             <List>
                 {books.map((book) => (
-                    <BookListItem book={book} />
+                    <BookListItem book={book} key={book._id} />
                 ))}
             </List>
-        </div>
+        </Box>
 
     )
 }

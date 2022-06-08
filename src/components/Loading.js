@@ -26,6 +26,7 @@ function Loading() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 zIndex: 10000,
+                pointerEvents: 'none',
                 position: 'absolute',
                 top: 0,
                 bottom: 0,

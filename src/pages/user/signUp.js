@@ -19,7 +19,7 @@ function signUp() {
         }
         )
         if (response.status === 201) {
-            Router.push('/')
+            Router.push('/user/login')
         }
     }
 

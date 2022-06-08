@@ -17,7 +17,12 @@ function Navbar() {
         if (searchString) {
             Router.push(`/books/search?q=${searchString}`)
             evt.target.q.value = ''
+            isMenuOpen && toggleIsMenuOpen()
         }
+    }
+
+    const handleRedirectOnClick = (url) => {
+        Router.push(url)
     }
 
     return (
@@ -61,9 +66,24 @@ function Navbar() {
                     </Typography>
 
                     <CustomButtonGroup>
-                        <CustomButton startIcon={<MenuBook />}>Biblioteca</CustomButton>
-                        <CustomButton startIcon={<Group />}>Amigos</CustomButton>
-                        <CustomButton startIcon={<TravelExplore />}>Explorar</CustomButton>
+                        <CustomButton
+                            startIcon={<MenuBook />}
+                            onClick={() => handleRedirectOnClick(user?.isLoggedIn ? `/user/${user.id}/my-library` : '/login')}
+                        >
+                            Biblioteca
+                        </CustomButton>
+
+                        <CustomButton
+                            startIcon={<Group />}
+                        >
+                            Amigos
+                        </CustomButton>
+
+                        <CustomButton
+                            startIcon={<TravelExplore />}
+                        >
+                            Explorar
+                        </CustomButton>
                     </CustomButtonGroup>
 
                     <SearchBarForm
@@ -100,7 +120,7 @@ function Navbar() {
                         <SearchIcon fontSize='large' />
                     </CustomButton>
 
-                    {user && <UserMenu user={user} /> /* Só carregar o menu do usuário depois que as informações forem carregadas */ }
+                    {user && <UserMenu user={user} /> /* Só carregar o menu do usuário depois que as informações forem carregadas */}
                 </Stack>
             </Toolbar>
 
