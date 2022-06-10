@@ -3,7 +3,7 @@ import { Typography, Box, TextField, Stack, Button, Link as MuiLink, InputAdornm
 import Link from 'next/link'
 import CustomBackground from '../../styles/Background.style'
 import useToggle from '../../hooks/useToggle'
-import API from '../../services/api'
+import API from '../../lib/api'
 import Router from 'next/router'
 
 function signUp() {

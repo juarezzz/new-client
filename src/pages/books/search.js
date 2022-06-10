@@ -1,6 +1,6 @@
 import { Box, List, Typography } from '@mui/material'
-import BookListItem from '../../components/BookListItem'
-import API from '../../services/api'
+import BookSearchItem from '../../components/BookSearchItem'
+import API from '../../lib/api'
 
 
 function Search({ books, search }) {
@@ -11,7 +11,7 @@ function Search({ books, search }) {
             </Typography>
             <List>
                 {books.map((book) => (
-                    <BookListItem book={book} key={book._id} />
+                    <BookSearchItem book={book} key={book._id} />
                 ))}
             </List>
         </Box>

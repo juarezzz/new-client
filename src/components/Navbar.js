@@ -68,21 +68,21 @@ function Navbar() {
                     <CustomButtonGroup>
                         <CustomButton
                             startIcon={<MenuBook />}
-                            onClick={() => handleRedirectOnClick(user?.isLoggedIn ? `/user/${user.id}/my-library` : '/login')}
+                            onClick={() => handleRedirectOnClick(user?.isLoggedIn ? `/user/${user.id}/my-library` : '/user/login')}
                         >
-                            Biblioteca
+                            Library
                         </CustomButton>
 
                         <CustomButton
                             startIcon={<Group />}
                         >
-                            Amigos
+                            Friends
                         </CustomButton>
 
                         <CustomButton
                             startIcon={<TravelExplore />}
                         >
-                            Explorar
+                            Browse
                         </CustomButton>
                     </CustomButtonGroup>
 
@@ -97,7 +97,7 @@ function Navbar() {
                     >
                         <InputBase
                             name='q'
-                            placeholder="Procurar"
+                            placeholder="Search"
                             sx={{ flex: 1 }}
                         />
                         <Button disableRipple sx={{ mr: -1.5 }} type="submit">
@@ -152,7 +152,7 @@ function Navbar() {
                             <InputBase
                                 name='q'
                                 autoFocus
-                                placeholder="Procurar"
+                                placeholder="Search"
                                 sx={{ flex: 1 }}
                             />
                             <Button disableRipple sx={{ mr: -1.5 }} type="submit">
@@ -164,17 +164,17 @@ function Navbar() {
                         <List>
                             <ListItem>
                                 <CustomButton startIcon={<MenuBook />} >
-                                    Biblioteca
+                                    Library
                                 </CustomButton>
                             </ListItem>
                             <ListItem>
                                 <CustomButton startIcon={<Group />}>
-                                    Amigos
+                                    Friends
                                 </CustomButton>
                             </ListItem>
                             <ListItem>
                                 <CustomButton startIcon={<TravelExplore />}>
-                                    Explorar
+                                    Browse
                                 </CustomButton>
                             </ListItem>
                         </List>

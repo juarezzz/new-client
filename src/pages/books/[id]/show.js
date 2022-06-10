@@ -2,7 +2,7 @@ import { Box, Grid, Rating, Typography, Stack } from "@mui/material";
 import AddBookButton from "../../../components/AddBookButton";
 import InfoTable from "../../../components/InfoTable";
 import withSessionSsr from "../../../lib/withSessionSsr";
-import API from '../../../services/api'
+import API from '../../../lib/api'
 
 function ShowPage({ book, user }) {
 

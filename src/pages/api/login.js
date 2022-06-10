@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import ironOptions from "../../lib/config";
-import API from "../../services/api"
+import API from "../../lib/api"
 
 
 export default withIronSessionApiRoute(loginRoute, setCookieOptions);
