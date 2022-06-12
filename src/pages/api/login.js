@@ -7,10 +7,10 @@ export default withIronSessionApiRoute(loginRoute, setCookieOptions);
 
 async function loginRoute(req, res) {
     const { email, password } = req.body
-    const { status, data } = await API.post('/users/authenticate', { email, password })
+    const { status, data: user } = await API.post('/users/authenticate', { email, password })
     if (status === 200) {
         req.session.user = {
-            ...data
+            ...user
         };
         await req.session.save();
         res.status(200).end()

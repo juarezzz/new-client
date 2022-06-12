@@ -120,10 +120,12 @@ function Navbar() {
                         <SearchIcon fontSize='large' />
                     </CustomButton>
 
-                    {user && <UserMenu user={user} /> /* Só carregar o menu do usuário depois que as informações forem carregadas */}
+                    {user && <UserMenu user={user} sx={{ display: { xs: 'none', sm: 'block' } }} />
+                    /* Só carregar o menu do usuário depois que as informações forem carregadas */}
                 </Stack>
             </Toolbar>
 
+            {/*Toolbar para resoluções menores*/}
             <Collapse in={isMenuOpen}>
                 <Box
                     width='auto'
@@ -163,7 +165,10 @@ function Navbar() {
 
                         <List>
                             <ListItem>
-                                <CustomButton startIcon={<MenuBook />} >
+                                <CustomButton
+                                    startIcon={<MenuBook />}
+                                    onClick={() => handleRedirectOnClick(user?.isLoggedIn ? `/user/${user.id}/my-library` : '/user/login')}
+                                >
                                     Library
                                 </CustomButton>
                             </ListItem>
@@ -176,6 +181,10 @@ function Navbar() {
                                 <CustomButton startIcon={<TravelExplore />}>
                                     Browse
                                 </CustomButton>
+                            </ListItem>
+                            <ListItem>
+                                {user && <UserMenu user={user} sx={{ display: { xs: 'block', sm: 'none' } }} />
+                                /* Só carregar o menu do usuário depois que as informações forem carregadas */}
                             </ListItem>
                         </List>
                     </>

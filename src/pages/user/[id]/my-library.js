@@ -114,7 +114,6 @@ export const getServerSideProps = withSessionSsr(
 
             //Separar os livros por status
             const bookList = userBooks.reduce((statusList, userBook) => {
-                console.log(statusList)
                 if (statusList[userBook.status]) {
                     statusList[userBook.status].push(userBook)
                 } else {

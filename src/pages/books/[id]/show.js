@@ -1,10 +1,21 @@
-import { Box, Grid, Rating, Typography, Stack } from "@mui/material";
+import { Box, Grid, Rating, Typography, Stack, Button } from "@mui/material";
+import { RateReview } from "@mui/icons-material";
 import AddBookButton from "../../../components/AddBookButton";
 import InfoTable from "../../../components/InfoTable";
 import withSessionSsr from "../../../lib/withSessionSsr";
 import API from '../../../lib/api'
+import { useState } from "react";
+import useToggle from "../../../hooks/useToggle"
+import Review from "../../../components/Review"
+import WriteReviewModal from "../../../components/WriteReviewModal";
 
 function ShowPage({ book, user }) {
+    const [rating, setRating] = useState(null)
+    const [isModalOpen, toggleIsModalOpen] = useToggle(false)
+
+    const handleRating = (evt, newValue) => {
+        setRating(newValue)
+    }
 
     return (
         <Grid container justifyContent='center' rowSpacing={2} columnGap={8}>
@@ -24,14 +35,14 @@ function ShowPage({ book, user }) {
                         />
                     </Box>
                     <Box textAlign='center' >
-                        <Rating value={4.55} readOnly sx={{ fontSize: 40 }} precision={0.1} />
-                        <Typography color='dark.light' fontWeight={600} fontSize={27}>4.55</Typography>
+                        <Rating value={book.avg_rating} readOnly sx={{ fontSize: 40 }} precision={0.1} />
+                        <Typography color='dark.light' fontWeight={600} fontSize={27}>{book.avg_rating ?? 0}</Typography>
                     </Box>
                     <AddBookButton bookId={book._id} user={user} />
                 </Stack>
             </Grid>
             <Grid item xs={12} md={7}>
-                <Stack direction='column'>
+                <Stack direction='column' gap={8}>
                     <Box>
                         <Typography component='h2' color='dark.light' fontWeight={700}
                             sx={{
@@ -45,16 +56,39 @@ function ShowPage({ book, user }) {
                             {book.author}
                         </Typography>
 
-                        <Typography component='pre' whiteSpace='pre-line' textAlign='justify' marginTop='20px' height='200px'
-                            sx={{
-                                overflowY: 'auto',
-                            }}
-                        >
+                        <Typography component='pre' whiteSpace='pre-line' textAlign='justify' marginTop='20px'>
                             {book.description}
                         </Typography>
                     </Box>
                     <InfoTable book={book} />
                 </Stack>
+            </Grid>
+
+            <Grid item xs={12}>
+                <Box height={600} width={'100%'}>
+                    <Typography variant="h3" color='dark.light' textAlign='center' >
+                        Reviews
+                    </Typography>
+                    <Typography color='dark.light' fontWeight={500} fontSize={27}>
+                        {rating ? 'You rated this book:' : 'Give this book a rating:'}
+                    </Typography>
+                    <Rating sx={{ fontSize: 50 }} onChange={handleRating} />
+                    <Button
+                        onClick={toggleIsModalOpen}
+                        startIcon={<RateReview />}
+                        variant="contained"
+                        sx={{ fontWeight: 600, fontSize: 18 }}>
+                        Write a Review
+                    </Button>
+
+                    {
+                        // book.reviews.map(review => (
+                        //     <Review review={review} key={review._id}/>
+                        // ))
+                    }
+
+                </Box>
+                <WriteReviewModal open={isModalOpen} onClose={toggleIsModalOpen} />
             </Grid>
         </Grid>
     )

@@ -1,33 +1,46 @@
-import { Avatar, Box, Button } from "@mui/material"
+import { Avatar, Box, Button, Typography } from "@mui/material"
 import Link from "next/link"
 
-function UserMenu({ user }) {
+function UserMenu({ user, sx }) {
     const isLoggedIn = user?.isLoggedIn
     const avatarImage = user?.avatar
+    const username = user?.username
 
     return (
-        <Box
-            sx={{
-                display: {
-                    xs: 'none',
-                    sm: 'block'
-                }
-            }}
-        >
+        <Box sx={sx}>
             {
                 isLoggedIn
                     ?
-                    <Button>
-                        <Avatar
+                    <Link href='/user/my-profile'>
+                        <Button
                             sx={{
-                                width: '36px',
-                                height: '36px',
-                                borderColor: 'dark.light',
-                                boxSizing: 'content-box'
+                                padding: {
+                                    xs: '0',
+                                    sm: '6px 8px'
+                                }
                             }}
-                            alt="User Profile Photo"
-                            src={avatarImage} />
-                    </Button>
+                        >
+                            <>
+                                <Avatar
+                                    sx={{
+                                        width: '36px',
+                                        height: '36px',
+                                        borderColor: 'dark.light',
+                                        boxSizing: 'content-box'
+                                    }}
+                                    alt="User Profile Photo"
+                                    src={avatarImage} />
+                                <Typography
+                                    pl={1}
+                                    fontWeight={500}
+                                    color='white'
+                                    sx={{ display: { xs: 'inline', sm: 'none' } }}
+                                >
+                                    {username}
+                                </Typography>
+                            </>
+                        </Button>
+                    </Link>
                     :
                     <Link href='/user/login'>
                         <Button
@@ -35,11 +48,14 @@ function UserMenu({ user }) {
                             variant="outlined"
                             color="light"
                             sx={{
-                                marginLeft: 1.5,
                                 fontWeight: 'bold',
                                 width: '70px',
                                 height: '35px',
-                                borderWidth: '2px'
+                                borderWidth: '2px',
+                                marginLeft: {
+                                    xs: 0,
+                                    sm: 1.5
+                                }
                             }}
                         >
                             Login
