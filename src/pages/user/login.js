@@ -5,22 +5,29 @@ import useToggle from '../../hooks/useToggle'
 import Link from 'next/link'
 import axios from 'axios'
 import Router from 'next/router'
+import { useState } from 'react'
 
 function login() {
     const [isVisible, toggleVisibility] = useToggle(false)
     const [rememberMe, toggleRememberMe] = useToggle(false)
+    const [error, setError] = useState(false)
 
     const handleSubmit = async (evt) => {
         evt.preventDefault()
         const { password, email } = evt.target
-        const response = await axios.post('/api/login', {
-            password: password.value,
-            email: email.value,
-            rememberMe: rememberMe
-        }
-        )
-        if (response.status === 200) {
-            Router.push('/')
+        try {
+            const response = await axios.post('/api/login', {
+                password: password.value,
+                email: email.value,
+                rememberMe: rememberMe
+            })
+            if (response.status === 200) {
+                Router.push('/')
+            } else {
+                setError(true)
+            }
+        } catch (error) {
+            setError(true)
         }
     }
 
@@ -41,6 +48,11 @@ function login() {
                 <Typography variant='h4' color='dark.light' textAlign='center' >
                     Login
                 </Typography>
+                {
+                    error
+                    &&
+                    <Typography color='error' fontWeight={600} marginBottom='-10px'>Email/password incorrect!</Typography>
+                }
                 <form
                     onSubmit={handleSubmit}
                 >
@@ -59,7 +71,7 @@ function login() {
                             fullWidth
                             label='Password'
                             name='password'
-                            helperText={<MuiLink color='secondary.main' href="#">Forgot your password?</MuiLink>}
+                            helperText={'Passwords must be at least 6 characters long'}
                             type={isVisible ? 'text' : 'password'}
                             InputProps={{
                                 endAdornment: (

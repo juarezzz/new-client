@@ -11,14 +11,13 @@ const valueToText = {
 }
 
 function AddBookButton({ bookId, user }) {
-
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
 
     //Se o user não estiver logado retorna false
     //Se ele estiver logado e o livro estiver em sua lista retorna o livro
     //Se ele estiver logado e o livro não estiver em sua lista retorna undefined
-    const isInUserList = user.isLoggedIn && user.books.find(bookObject => bookObject.book._id === bookId)
+    const isInUserList = user.hasBook
 
     const [isChecked, setIsChecked] = useState(Boolean(isInUserList))
     const [text, setText] = useState(

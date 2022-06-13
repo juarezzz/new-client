@@ -6,6 +6,7 @@ import Link from 'next/link'
 
 function BookListItem({ userBook, handleRemoveBook, handleChangeBook, currentList }) {
     const { book } = userBook
+    const score = userBook.review?.score ?? null
 
     return (
         <ListItem
@@ -45,9 +46,9 @@ function BookListItem({ userBook, handleRemoveBook, handleChangeBook, currentLis
                     </Typography>
                 </div>
                 <Stack direction='row'>
-                    <Rating sx={{ fontSize: 24 }} />
+                    <Rating readOnly sx={{ fontSize: 24 }} value={score} />
                     <Typography color='dark.light' fontWeight={700}>
-                        - Your rating
+                        - {score ? 'Your rating' : 'You have not rated this book yet'}
                     </Typography>
                 </Stack>
                 <Typography>

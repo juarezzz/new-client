@@ -6,15 +6,32 @@ import withSessionSsr from "../../../lib/withSessionSsr";
 import API from '../../../lib/api'
 import { useState } from "react";
 import useToggle from "../../../hooks/useToggle"
-import Review from "../../../components/Review"
 import WriteReviewModal from "../../../components/WriteReviewModal";
+import Router from 'next/router'
+import Review from "../../../components/Review";
 
 function ShowPage({ book, user }) {
-    const [rating, setRating] = useState(null)
+    const [rating, setRating] = useState(user.hasBook?.review?.score ?? null)
     const [isModalOpen, toggleIsModalOpen] = useToggle(false)
 
-    const handleRating = (evt, newValue) => {
-        setRating(newValue)
+    const handleRating = async (evt, newValue) => {
+        if (!user.isLoggedIn) return Router.push('/user/login')
+        if (newValue && newValue !== rating) {
+            setRating(newValue)
+            if (!user.hasBook) {
+                await API.post(`users/${user.id}/books`, { book: book._id, status: 'Read' })
+            }
+
+            await API.post(`/books/${book._id}/reviews`, {
+                user: {
+                    userId: user.id,
+                    username: user.username,
+                    avatar: user.avatar
+                },
+                book: book._id,
+                score: newValue
+            })
+        }
     }
 
     return (
@@ -65,48 +82,80 @@ function ShowPage({ book, user }) {
             </Grid>
 
             <Grid item xs={12}>
-                <Box height={600} width={'100%'}>
-                    <Typography variant="h3" color='dark.light' textAlign='center' >
-                        Reviews
-                    </Typography>
-                    <Typography color='dark.light' fontWeight={500} fontSize={27}>
-                        {rating ? 'You rated this book:' : 'Give this book a rating:'}
-                    </Typography>
-                    <Rating sx={{ fontSize: 50 }} onChange={handleRating} />
-                    <Button
-                        onClick={toggleIsModalOpen}
-                        startIcon={<RateReview />}
-                        variant="contained"
-                        sx={{ fontWeight: 600, fontSize: 18 }}>
-                        Write a Review
-                    </Button>
-
-                    {
-                        // book.reviews.map(review => (
-                        //     <Review review={review} key={review._id}/>
-                        // ))
+                <Typography variant="h3" color='dark.light' textAlign='center' marginBottom='50px'>
+                    Reviews
+                </Typography>
+                <Box width={'100%'} display='flex' justifyContent='space-around' sx={{
+                    flexDirection: {
+                        xs: 'column',
+                        md: 'row'
                     }
+                }} >
+                    <Stack width={'fit-content'} paddingLeft={1} gap={1}>
+                        <Typography color='dark.light' fontWeight={500} fontSize={27}>
+                            {rating ? 'You rated this book:' : 'Give this book a rating:'}
+                        </Typography>
+                        <Rating sx={{ fontSize: 50 }} onChange={handleRating} value={rating} />
+                        {
+                            rating
+                                &&
+                                user.hasBook?.review?.comment?.body
+                                ?
+                                <Button
+                                    onClick={toggleIsModalOpen}
+                                    startIcon={<RateReview />}
+                                    variant="contained"
+                                    sx={{ fontWeight: 600, fontSize: 18 }}>
+                                    Edit your Review
+                                </Button>
+                                :
+                                <Button
+                                    onClick={toggleIsModalOpen}
+                                    startIcon={<RateReview />}
+                                    variant="contained"
+                                    sx={{ fontWeight: 600, fontSize: 18 }}>
+                                    Write a Review
+                                </Button>
+                        }
+                    </Stack>
+                    <Box>
+                        {
+                            user.hasBook?.review?.comment?.body
+                            &&
+                            <Review review={user.hasBook?.review} user={user} key={user.hasBook?.review?._id} />
+                        }
+                        {
+                            book.reviews.map(review => {
+                                if (review.comment?.body && review.user.userId !== user.id) {
+                                    return <Review review={review} key={review._id} />
+                                }
+                            }
+                            )
+                        }
+                    </Box>
 
                 </Box>
-                <WriteReviewModal open={isModalOpen} onClose={toggleIsModalOpen} />
+                <WriteReviewModal open={isModalOpen} onClose={toggleIsModalOpen} user={user} book={book} />
             </Grid>
-        </Grid>
+        </Grid >
     )
 }
 
 export const getServerSideProps = withSessionSsr(
     async function getServerSideProps({ query, req }) {
         const { id } = query
-        const { data } = await API.get(`/books/${id}`)
+        const { data: book } = await API.get(`/books/${id}`)
         let user
         if (req.session.user) {
             user = { ...req.session.user, isLoggedIn: true }
             const { data: userBooks } = await API.get(`/users/${user.id}/books`)
             user.books = userBooks
+            // Encontrar se o livro dessa página já está na biblioteca do usuário e se ele já deixou uma nota ou review
+            user.hasBook = user.books.find(bookObject => bookObject.book._id === book._id) ?? null
         } else {
             user = { isLoggedIn: false }
         }
-        return { props: { book: data, user } }
+        return { props: { book, user } }
     }
 )
 

@@ -98,6 +98,7 @@ export default function MyProfile({ userData }) {
 
                 <Box width='100%' textAlign="right">
                     <TextField
+                        placeholder='Say something about yourself'
                         fullWidth
                         value={bio}
                         multiline

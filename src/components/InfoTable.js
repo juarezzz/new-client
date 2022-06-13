@@ -28,10 +28,14 @@ const InfoTable = ({ book }) => {
                         <StyledTableCell>Number Of Pages</StyledTableCell>
                         <StyledTableCell>{book.num_of_pages}</StyledTableCell>
                     </TableRow>
-                    <TableRow>
-                        <StyledTableCell>Publisher</StyledTableCell>
-                        <StyledTableCell>{book.publisher}</StyledTableCell>
-                    </TableRow>
+                    {
+                        book.publisher
+                        &&
+                        <TableRow>
+                            <StyledTableCell>Publisher</StyledTableCell>
+                            <StyledTableCell>{book.publisher}</StyledTableCell>
+                        </TableRow>
+                    }
                     <TableRow>
                         <StyledTableCell>Publish Date</StyledTableCell>
                         <StyledTableCell>{new Date(book.publish_date).toLocaleDateString()}</StyledTableCell>
